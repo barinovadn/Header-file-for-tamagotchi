@@ -36,20 +36,18 @@ public:
     }
 
     int get_value() const { return value; }
-
-    virtual string get_name() const = 0;
 };
 
 
-class Tamagotchi {
-private:
+class Tamagotchi : public TamagotchiStat {
+protected:
     unordered_map<string, TamagotchiStat*> stats;
 public:
 
-    Tamagotchi() = default;
-
-    void add_stat(TamagotchiStat* stat) {
-        stats.insert({ stat->get_name(), stat});
+    Tamagotchi(initializer_list<pair<const string, TamagotchiStat*>> initList) {
+        for (const auto& pair : initList) {
+            stats[pair.first] = pair.second;
+        }
     }
 
     void update() {
@@ -68,5 +66,4 @@ public:
 };
 
 
-#endif 
-
+#endif
